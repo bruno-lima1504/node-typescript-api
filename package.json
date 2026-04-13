@@ -29,7 +29,7 @@
     "services:run": "docker compose -f infra/compose.yml up -d",
     "services:stop": "docker compose -f infra/compose.yml stop",
     "services:down": "docker compose -f infra/compose.yml down",
-    "services:lint:run": "eslint ./src ./test --ext .ts",
+    "services:lint:check": "eslint ./src ./test --ext .ts",
     "services:lint:fix": "eslint ./src ./test --ext .ts --fix",
     "services:prettier:check": "prettier -c 'src/**/*.ts' 'test/**/*.ts'",
     "services:prettier:fix": "prettier -w 'src/**/*.ts' 'test/**/*.ts'"
