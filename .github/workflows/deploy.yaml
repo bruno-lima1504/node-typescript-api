@@ -30,7 +30,7 @@ jobs:
 
             # 3. Reconstruir e subir os containers
             # O --build garante que o Dockerfile (Node 24 Multi-stage) seja executado
-            docker-compose up -d --build
+            docker compose -f infra/compose.yml up -d --build
 
             # 4. Limpeza de imagens antigas (crucial para não encher o disco da VPS)
             docker image prune -f
@@ -38,4 +38,4 @@ jobs:
             # 5. Verificação rápida (Health Check)
             echo "Aguardando inicialização..."
             sleep 10
-            docker ps
+            docker compose -f infra/compose.yml ps
