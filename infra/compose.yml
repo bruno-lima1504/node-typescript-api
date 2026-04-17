@@ -3,25 +3,56 @@ services:
     build:
       context: ..
       dockerfile: Dockerfile
+    container_name: node-api
     restart: always
     env_file:
       - ../.env
+    environment:
+      - NODE_ENV=production
     depends_on:
       mongodb:
         condition: service_healthy
     ports:
       - '3000:3000'
+    networks:
+      - app-network
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'wget',
+          '--quiet',
+          '--tries=1',
+          '--spider',
+          'http://localhost:3000/health',
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
   mongodb:
-    image: mongo:latest
+    image: mongo:7
     container_name: mongodb-server
     restart: always
-    env_file:
-      - ../.env
+    environment:
+      - MONGO_INITDB_DATABASE=surf-forecast
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodb-data:/data/db
     healthcheck:
       test: ['CMD', 'mongosh', '--eval', "db.adminCommand('ping')"]
       interval: 10s
       timeout: 5s
       retries: 5
-    # Porta do MongoDB não é exposta para fora (segurança)
-    ports:
-      - '27017:27017'
+      start_period: 30s
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mongodb-data:

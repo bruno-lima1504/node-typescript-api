@@ -1,0 +1,13 @@
+node_modules
+.git
+.github
+test
+*.log
+yarn.lock
+package-lock.json
+.eslintrc*
+.prettier*
+.gitignore
+*.md
+yarn-error.log
+dist
