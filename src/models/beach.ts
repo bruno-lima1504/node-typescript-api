@@ -1,6 +1,6 @@
 import mongoose, { Model, InferSchemaType, Schema } from 'mongoose';
 
-export enum BeachPosition {
+export enum GeoPosition {
   S = 'S',
   E = 'E',
   W = 'W',
@@ -10,7 +10,7 @@ export enum BeachPosition {
 export interface Beach {
   _id?: string;
   name: string;
-  position: BeachPosition;
+  position: GeoPosition;
   lat: number;
   lng: number;
   user: string;
@@ -24,7 +24,7 @@ const schema = new mongoose.Schema(
     position: {
       type: String,
       required: true,
-      enum: Object.values(BeachPosition),
+      enum: Object.values(GeoPosition),
     },
     user: {
       type: Schema.Types.ObjectId,

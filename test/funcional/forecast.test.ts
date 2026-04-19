@@ -1,4 +1,4 @@
-import { BeachModel, BeachPosition } from '@src/models/beach';
+import { BeachModel, GeoPosition } from '@src/models/beach';
 import { UserModel } from '@src/models/user';
 import AuthService from '@src/services/auth';
 import nock from 'nock';
@@ -20,7 +20,7 @@ describe('Beach forecast functional tests', () => {
       lat: -33.792726,
       lng: 151.289824,
       name: 'Manly',
-      position: BeachPosition.E,
+      position: GeoPosition.E,
       user: user.id,
     };
     await new BeachModel(defaultBeach).save();
