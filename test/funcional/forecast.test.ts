@@ -52,7 +52,7 @@ describe('Beach forecast functional tests', () => {
     })
       .defaultReplyHeaders({ 'access-control-allow-origin': '*' })
       .get('/v2/weather/point')
-      .query(true) // 🔥 aceita qualquer query (melhor pra teste)
+      .query(true) // aceita qualquer query (melhor pra teste)
       .replyWithError('Something went wrong');
 
     const { status } = await global.testRequest
