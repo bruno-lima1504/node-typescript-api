@@ -100,4 +100,39 @@ describe('Users function tests', () => {
       expect(response.status).toBe(401);
     });
   });
+
+  describe('When getting user profile info', () => {
+    it('Should return the tokens owner profile information', async () => {
+      const newUser = {
+        name: 'valide user',
+        email: 'valideuser@mail.com',
+        password: '1234',
+      };
+
+      const user = await new UserModel(newUser).save();
+      const token = AuthService.generateToken(user.toJSON());
+      const { body, status } = await global.testRequest
+        .get('/users/me')
+        .set({ 'x-access-token': token });
+
+      expect(status).toBe(200);
+      expect(body).toMatchObject(JSON.parse(JSON.stringify({ user })));
+    });
+    it('Should return not found, when the user is not found', async () => {
+      const newUser = {
+        name: 'not found user',
+        email: 'notfounduser@mail.com',
+        password: '1234',
+      };
+
+      const user = await new UserModel(newUser);
+      const token = AuthService.generateToken(user.toJSON());
+      const { body, status } = await global.testRequest
+        .get('/users/me')
+        .set({ 'x-access-token': token });
+
+      expect(status).toBe(404);
+      expect(body.message).toBe('User not found!');
+    });
+  });
 });
